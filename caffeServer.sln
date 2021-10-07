@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "caffeServer", "caffeServer.csproj", "{A2CA0627-1E6B-402C-9891-5A3A2E00068A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2CA0627-1E6B-402C-9891-5A3A2E00068A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2CA0627-1E6B-402C-9891-5A3A2E00068A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2CA0627-1E6B-402C-9891-5A3A2E00068A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2CA0627-1E6B-402C-9891-5A3A2E00068A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
