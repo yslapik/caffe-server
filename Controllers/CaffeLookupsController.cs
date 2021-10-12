@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using caffeServer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace caffeServer.Controllers
@@ -27,7 +28,29 @@ namespace caffeServer.Controllers
             {
                 return db.Positions.ToList();
             }
-        }        
+        } 
+        
+        [HttpPost]
+        [Route("/Positions/set")]
+        public void SetPositions(Positions[] positionsArray)
+        {
+            using (CaffeDataContext db = new CaffeDataContext())
+            {
+                var positions = db.Positions.AsNoTracking().ToArray();
+                IEnumerable<Positions> newPositions = positionsArray.Except(positions);
+                IEnumerable<Positions> modifiedPositions = positionsArray.Except(newPositions);
+                if (newPositions.Any())
+                {
+                    db.Positions.AddRange(newPositions);
+                } 
+                if (modifiedPositions.Any())
+                {
+                    db.Positions.UpdateRange(modifiedPositions);
+                }
+                db.SaveChanges();
+            }
+        } 
+        
         [HttpGet]
         [Route("/DailyResidues")]
         public IEnumerable<DailyResidues> GetDailyResidues()
