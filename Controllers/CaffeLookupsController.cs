@@ -24,59 +24,62 @@ namespace caffeServer.Controllers
         [Route("/Positions")]
         public IEnumerable<Positions> GetPositions()
         {
-            using (CaffeDataContext db = new CaffeDataContext())
-            {
-                return db.Positions.ToList();
-            }
+            var repo = new CaffeRepository<Positions>(new CaffeDataContext());
+            return repo.SelectDataList();
         } 
         
         [HttpPost]
         [Route("/Positions/set")]
         public void SetPositions(Positions[] positionsArray)
         {
-            using (CaffeDataContext db = new CaffeDataContext())
-            {
-                var positions = db.Positions.AsNoTracking().ToArray();
-                IEnumerable<Positions> newPositions = positionsArray.Except(positions);
-                IEnumerable<Positions> modifiedPositions = positionsArray.Except(newPositions);
-                if (newPositions.Any())
-                {
-                    db.Positions.AddRange(newPositions);
-                } 
-                if (modifiedPositions.Any())
-                {
-                    db.Positions.UpdateRange(modifiedPositions);
-                }
-                db.SaveChanges();
-            }
+            var repo = new CaffeRepository<Positions>(new CaffeDataContext());
+            repo.UpsertDataList(positionsArray);
+        }
+        [HttpDelete]
+        [Route("/Positions/remove")]
+        public void RemovePositions(Positions[] positionsArray)
+        {
+            var repo = new CaffeRepository<Positions>(new CaffeDataContext());
+            repo.RemoveDataList(positionsArray);
         } 
         
-        [HttpGet]
-        [Route("/DailyResidues")]
-        public IEnumerable<DailyResidues> GetDailyResidues()
-        {
-            using (CaffeDataContext db = new CaffeDataContext())
-            {
-                return db.DailyResidues.ToList();
-            }
-        }
-        [HttpGet]
-        [Route("/DailySales")]
-        public IEnumerable<DailySales> GetDailySales()
-        {
-            using (CaffeDataContext db = new CaffeDataContext())
-            {
-                return db.DailySales.ToList();
-            }
-        }        
         [HttpGet]
         [Route("/Residues")]
         public IEnumerable<Residues> GetResidues()
         {
-            using (CaffeDataContext db = new CaffeDataContext())
-            {
-                return db.Residues.ToList();
-            }
+            var  repo = new CaffeRepository<Residues>(new CaffeDataContext());
+            return repo.SelectDataList();
+        }
+        
+        [HttpPost]
+        [Route("/Residues/set")]
+        public void SetResidues(Residues[] residuesArray)
+        {
+            var repo = new CaffeRepository<Residues>(new CaffeDataContext());
+            repo.UpsertDataList(residuesArray);
+        }
+        [HttpDelete]
+        [Route("/Residues/remove")]
+        public void RemoveResidues(Residues[] residuesArray)
+        {
+            var repo = new CaffeRepository<Residues>(new CaffeDataContext());
+            repo.RemoveDataList(residuesArray);
+        } 
+
+        [HttpGet]
+        [Route("/DailyResidues")]
+        public IEnumerable<DailyResidues> GetDailyResidues()
+        {
+            var repo = new CaffeRepository<DailyResidues>(new CaffeDataContext());
+            return repo.SelectDataList();
+        }
+        
+        [HttpGet]
+        [Route("/DailySales")]
+        public IEnumerable<DailySales> GetDailySales()
+        {
+            var repo = new CaffeRepository<DailySales>(new CaffeDataContext());
+            return repo.SelectDataList();
         }
     }
 }
