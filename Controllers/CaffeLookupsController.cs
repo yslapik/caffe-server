@@ -1,14 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Collections;
+using System.Net;
 using caffeServer.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace caffeServer.Controllers
 {
+    public class StatusCodeException : Exception
+    {
+        private HttpStatusCode _statusCode;
+        public StatusCodeException(HttpStatusCode statusCode, string message)
+            : base(message) 
+        {
+            _statusCode = statusCode;
+        }
+    }
+
     [ApiController]
     [Route("[controller]")]
     public class CaffeLookupsController : ControllerBase
@@ -21,65 +29,88 @@ namespace caffeServer.Controllers
         }
 
         [HttpGet]
-        [Route("/Positions")]
-        public IEnumerable<Positions> GetPositions()
+        [Route("/{model}")]
+        public IEnumerable GetData(string model)
         {
-            var repo = new CaffeRepository<Positions>(new CaffeDataContext());
-            return repo.SelectDataList();
-        } 
-        
-        [HttpPost]
-        [Route("/Positions/set")]
-        public void SetPositions(Positions[] positionsArray)
-        {
-            var repo = new CaffeRepository<Positions>(new CaffeDataContext());
-            repo.UpsertDataList(positionsArray);
-        }
-        [HttpDelete]
-        [Route("/Positions/remove")]
-        public void RemovePositions(Positions[] positionsArray)
-        {
-            var repo = new CaffeRepository<Positions>(new CaffeDataContext());
-            repo.RemoveDataList(positionsArray);
-        } 
-        
-        [HttpGet]
-        [Route("/Residues")]
-        public IEnumerable<Residues> GetResidues()
-        {
-            var  repo = new CaffeRepository<Residues>(new CaffeDataContext());
-            return repo.SelectDataList();
-        }
-        
-        [HttpPost]
-        [Route("/Residues/set")]
-        public void SetResidues(Residues[] residuesArray)
-        {
-            var repo = new CaffeRepository<Residues>(new CaffeDataContext());
-            repo.UpsertDataList(residuesArray);
-        }
-        [HttpDelete]
-        [Route("/Residues/remove")]
-        public void RemoveResidues(Residues[] residuesArray)
-        {
-            var repo = new CaffeRepository<Residues>(new CaffeDataContext());
-            repo.RemoveDataList(residuesArray);
-        } 
+            object repo;
+            switch (model.ToLower())
+            {
+                case "positions":
+                    repo = new CaffeRepository<Positions>(new CaffeDataContext());
+                    return ((CaffeRepository<Positions>)repo).Select(); 
+                case "residues":
+                    repo = new CaffeRepository<Residues>(new CaffeDataContext());
+                    return ((CaffeRepository<Residues>)repo).Select();
+                case "DailyResidues":
+                    repo = new CaffeRepository<DailyResidues>(new CaffeDataContext());
+                    return ((CaffeRepository<DailyResidues>)repo).Select();
+                case "DailySales":
+                    repo = new CaffeRepository<DailySales>(new CaffeDataContext());
+                    return ((CaffeRepository<DailySales>)repo).Select();
+                default:
+                    var exception =  new StatusCodeException(HttpStatusCode.BadRequest, "invalid model in uri");
+                    throw exception;
+            }
 
-        [HttpGet]
-        [Route("/DailyResidues")]
-        public IEnumerable<DailyResidues> GetDailyResidues()
-        {
-            var repo = new CaffeRepository<DailyResidues>(new CaffeDataContext());
-            return repo.SelectDataList();
-        }
+        } 
         
-        [HttpGet]
-        [Route("/DailySales")]
-        public IEnumerable<DailySales> GetDailySales()
+        [HttpPut]
+        [Route("/{model}/set")]
+        public void SetData(ArrayList inputData, string model)
         {
-            var repo = new CaffeRepository<DailySales>(new CaffeDataContext());
-            return repo.SelectDataList();
+            if (inputData.Count == 0) return;
+            object repo;
+            switch (model.ToLower())
+            {
+                case "positions":
+                    repo = new CaffeRepository<Positions>(new CaffeDataContext());
+                    ((CaffeRepository<Positions>)repo).Upsert(inputData);
+                    break;
+                case "residues":
+                    repo = new CaffeRepository<Residues>(new CaffeDataContext());
+                    ((CaffeRepository<Residues>)repo).Upsert(inputData);
+                    break;
+                case "dailyresidues":
+                    repo = new CaffeRepository<DailyResidues>(new CaffeDataContext());
+                    ((CaffeRepository<DailyResidues>)repo).Upsert(inputData);
+                    break;
+                case "dailysales":
+                    repo = new CaffeRepository<DailySales>(new CaffeDataContext());
+                    ((CaffeRepository<DailySales>)repo).Upsert(inputData);
+                    break;
+                default:
+                    var exception = new StatusCodeException(HttpStatusCode.BadRequest, "invalid model in uri");
+                    throw exception;
+            }
+        }
+        [HttpDelete]
+        [Route("/{model}/remove")]
+        public void RemovePositions(ArrayList inputData, string model)
+        {
+            if (inputData.Count == 0) return;
+            object repo;
+            switch (model.ToLower())
+            {
+                case "positions":
+                    repo = new CaffeRepository<Positions>(new CaffeDataContext());
+                    ((CaffeRepository<Positions>)repo).Delete(inputData);
+                    break;
+                case "residues":
+                    repo = new CaffeRepository<Residues>(new CaffeDataContext());
+                    ((CaffeRepository<Residues>)repo).Delete(inputData);
+                    break;
+                case "dailyresidues":
+                    repo = new CaffeRepository<DailyResidues>(new CaffeDataContext());
+                    ((CaffeRepository<DailyResidues>)repo).Delete(inputData);
+                    break;
+                case "dailysales":
+                    repo = new CaffeRepository<DailySales>(new CaffeDataContext());
+                    ((CaffeRepository<DailySales>)repo).Delete(inputData);
+                    break;
+                default:
+                    var exception = new StatusCodeException(HttpStatusCode.BadRequest, "invalid model in uri");
+                    throw exception;
+            }
         }
     }
 }

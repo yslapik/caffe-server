@@ -1,6 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using caffeServer.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace caffeServer
 {
@@ -13,12 +17,8 @@ namespace caffeServer
             _dbContext = dbContext;
             _dbSet = _dbContext.Set<T>();
         }
-        public IEnumerable<T> SelectDataList()
-        {
-            return _dbSet.AsNoTracking().ToList();
-        }
 
-        public void UpsertDataList(T[] datalist)
+        private void UpsertDataList(IEnumerable<T> datalist)
         {
             var positions = _dbSet.AsNoTracking().ToArray();
             IEnumerable<T> newPositions = datalist.Except(positions);
@@ -33,11 +33,31 @@ namespace caffeServer
             }
             _dbContext.SaveChanges();
         }
-
-        public void RemoveDataList(T[] datalist)
+        
+        private IEnumerable<T> DeserializeInput<T>(IEnumerable inputData)
         {
-            _dbSet.RemoveRange(datalist);
+            return (from JsonElement element in inputData
+                select element.GetRawText()
+                into json
+                select JsonConvert.DeserializeObject<T>(json));
+        }
+
+        public IEnumerable Select()
+        {
+            return _dbSet.AsNoTracking().ToArray();
+        }
+        
+        public void Delete(IEnumerable inputData)
+        {
+            var dataList = DeserializeInput<T>(inputData);
+            _dbSet.RemoveRange(dataList);
             _dbContext.SaveChanges();
+        }
+
+        public void Upsert(IEnumerable inputData)
+        {
+            var dataList = DeserializeInput<T>(inputData);
+            UpsertDataList(dataList);
         }
     }
 }

@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace caffeServer.Models
 {
-    public class Residues
+    public class Residues: BaseModel
     {
-        [Required] 
-        public Guid Id { get; set; }
         [Required] 
         public string Name { get; set; }
         public DateTime PurchaseDate { get; set; }

@@ -1,12 +1,14 @@
+using System.Collections;
 using System.Collections.Generic;
+using caffeServer.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace caffeServer
 {
     public interface ICaffeRepository<T>
     {
-        IEnumerable<T> SelectDataList();
-        void UpsertDataList(T[] datalist);
-        void RemoveDataList(T[] datalist);
+        IEnumerable Select();
+        void Upsert(IEnumerable inputData);
+        void Delete(IEnumerable inputData);
     }
 }
