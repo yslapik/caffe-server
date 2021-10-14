@@ -30,7 +30,7 @@ namespace caffeServer.Controllers
 
         [HttpGet]
         [Route("/{model}")]
-        public IEnumerable GetData(string model)
+        public IEnumerable GetModelData(string model)
         {
             object repo;
             switch (model.ToLower())
@@ -56,7 +56,7 @@ namespace caffeServer.Controllers
         
         [HttpPut]
         [Route("/{model}/set")]
-        public void SetData(ArrayList inputData, string model)
+        public void SetModelData(ArrayList inputData, string model)
         {
             if (inputData.Count == 0) return;
             object repo;
@@ -83,9 +83,10 @@ namespace caffeServer.Controllers
                     throw exception;
             }
         }
+        
         [HttpDelete]
         [Route("/{model}/remove")]
-        public void RemovePositions(ArrayList inputData, string model)
+        public void RemoveModelData(ArrayList inputData, string model)
         {
             if (inputData.Count == 0) return;
             object repo;
