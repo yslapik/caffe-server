@@ -1,24 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Net;
+using caffeServer.Controllers.Exceptions;
 using caffeServer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace caffeServer.Controllers
 {
-    public class StatusCodeException : Exception
-    {
-        private HttpStatusCode _statusCode;
-        public StatusCodeException(HttpStatusCode statusCode, string message)
-            : base(message) 
-        {
-            _statusCode = statusCode;
-        }
-    }
-
     [ApiController]
-    [Route("[controller]")]
+    [Route("lookups")]
     public class CaffeLookupsController : ControllerBase
     {
         private readonly ILogger<CaffeLookupsController> _logger;

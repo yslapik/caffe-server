@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,12 @@ namespace caffeServer
         {
             return _dbSet.AsNoTracking().ToArray();
         }
-        
+
+        public IEnumerable Select(Func<T, bool> predicate)
+        {
+            return _dbSet.AsNoTracking().Where(predicate).ToArray();
+        }
+
         public void Delete(IEnumerable inputData)
         {
             var dataList = DeserializeInput<T>(inputData);
