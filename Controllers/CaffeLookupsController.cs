@@ -2,6 +2,7 @@
 using System.Net;
 using caffeServer.Controllers.Exceptions;
 using caffeServer.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -31,12 +32,9 @@ namespace caffeServer.Controllers
                 case "residues":
                     repo = new CaffeRepository<Residues>(new CaffeDataContext());
                     return ((CaffeRepository<Residues>)repo).Select();
-                case "DailyResidues":
-                    repo = new CaffeRepository<DailyResidues>(new CaffeDataContext());
-                    return ((CaffeRepository<DailyResidues>)repo).Select();
-                case "DailySales":
-                    repo = new CaffeRepository<DailySales>(new CaffeDataContext());
-                    return ((CaffeRepository<DailySales>)repo).Select();
+                case "positiontypes":
+                    repo = new CaffeRepository<PositionTypes>(new CaffeDataContext());
+                    return ((CaffeRepository<PositionTypes>)repo).Select();
                 default:
                     var exception =  new StatusCodeException(HttpStatusCode.BadRequest, "invalid model in uri");
                     throw exception;
@@ -60,13 +58,9 @@ namespace caffeServer.Controllers
                     repo = new CaffeRepository<Residues>(new CaffeDataContext());
                     ((CaffeRepository<Residues>)repo).Upsert(inputData);
                     break;
-                case "dailyresidues":
-                    repo = new CaffeRepository<DailyResidues>(new CaffeDataContext());
-                    ((CaffeRepository<DailyResidues>)repo).Upsert(inputData);
-                    break;
-                case "dailysales":
-                    repo = new CaffeRepository<DailySales>(new CaffeDataContext());
-                    ((CaffeRepository<DailySales>)repo).Upsert(inputData);
+                case "positiontypes":
+                    repo = new CaffeRepository<PositionTypes>(new CaffeDataContext());
+                    ((CaffeRepository<PositionTypes>)repo).Upsert(inputData);
                     break;
                 default:
                     var exception = new StatusCodeException(HttpStatusCode.BadRequest, "invalid model in uri");
@@ -90,13 +84,9 @@ namespace caffeServer.Controllers
                     repo = new CaffeRepository<Residues>(new CaffeDataContext());
                     ((CaffeRepository<Residues>)repo).Delete(inputData);
                     break;
-                case "dailyresidues":
-                    repo = new CaffeRepository<DailyResidues>(new CaffeDataContext());
-                    ((CaffeRepository<DailyResidues>)repo).Delete(inputData);
-                    break;
-                case "dailysales":
-                    repo = new CaffeRepository<DailySales>(new CaffeDataContext());
-                    ((CaffeRepository<DailySales>)repo).Delete(inputData);
+                case "positiontypes":
+                    repo = new CaffeRepository<PositionTypes>(new CaffeDataContext());
+                    ((CaffeRepository<PositionTypes>)repo).Delete(inputData);
                     break;
                 default:
                     var exception = new StatusCodeException(HttpStatusCode.BadRequest, "invalid model in uri");
