@@ -8,7 +8,7 @@ namespace caffeServer.Models
         [Required] 
         public string Name { get; set; }
         public DateTime PurchaseDate { get; set; }
-        public int TotalAmount { get; set; } 
-        public int DefectAmount { get; set; }
+        public decimal TotalAmount { get; set; } 
+        public decimal DefectAmount { get; set; }
     }
 }

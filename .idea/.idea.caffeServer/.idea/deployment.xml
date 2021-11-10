@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="host" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="host">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$/.gitignore" web="/" />
+            <mapping local="$PROJECT_DIR$/CaffeDataContext.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/CaffeRepository.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/Controllers/CaffeDailyDataController.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/Controllers/CaffeLookupsController.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/Controllers/Exceptions/StatusCodeException.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/ICaffeRepository.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/Models/BaseModel.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/Models/DailyResidues.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/Models/DailySales.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/Models/Positions.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/Models/Residues.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/Program.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/Properties/launchSettings.json" web="/" />
+            <mapping local="$PROJECT_DIR$/Startup.cs" web="/" />
+            <mapping local="$PROJECT_DIR$/appsettings.Development.json" web="/" />
+            <mapping local="$PROJECT_DIR$/appsettings.json" web="/" />
+            <mapping local="$PROJECT_DIR$/caffeServer.csproj" web="/" />
+            <mapping local="$PROJECT_DIR$/caffeServer.sln" web="/" />
+            <mapping local="$PROJECT_DIR$/global.json" web="/" />
+            <mapping local="$PROJECT_DIR$/obj/Release/netcoreapp3.1/caffeServer.AssemblyInfo.cs" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

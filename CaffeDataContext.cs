@@ -8,9 +8,10 @@ namespace caffeServer
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-            optionsBuilder.UseNpgsql(@"");
+            optionsBuilder.UseNpgsql(@"User ID=supervisor;Password=umg4EHw9E9TXkv;Host=65.19.191.149;Port=5432;Database=caffe-client-db;");
         }
         public DbSet<Positions> Positions { get; set; }
+        public DbSet<PositionTypes> PositionTypes { get; set; }
         public DbSet<DailyResidues> DailyResidues { get; set; } 
         public DbSet<DailySales> DailySales { get; set; }
         public DbSet<Residues> Residues { get; set; }

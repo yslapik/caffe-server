@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="91333f46-6c11-4dd0-b958-4b587bd6ffce" name="host">
+        <fileTransfer rootFolder="/var/www/caffeServer" accessType="SFTP" host="65.19.191.149" port="22" sshConfigId="4c03ead6-7163-4e26-a614-6eccfd619c5c" sshConfig="yevhen@65.19.191.149:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
